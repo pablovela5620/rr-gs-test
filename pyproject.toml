@@ -1,0 +1,28 @@
+[project]
+authors = [{name = "Pablo Vela", email = "pablovela5620@gmail.com"}]
+dependencies = []
+name = "rr-gs-test"
+requires-python = ">= 3.11"
+version = "0.1.0"
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.pixi.workspace]
+channels = ["https://prefix.dev/ai-demos", "conda-forge"]
+platforms = ["osx-arm64"]
+
+[tool.pixi.pypi-dependencies]
+rr_gs_test = { path = ".", editable = true }
+plyfile = ">=1.1,<2"
+rerun-sdk = "==0.30.2"
+
+[tool.pixi.tasks]
+viewer = "rerun-gs-viewer"
+log-chair = "python -m rr_gs_test.log_chair"
+
+[tool.pixi.dependencies]
+python = "==3.12"
+numpy = ">=2.0,<3"
+rerun-gs-viewer = "==0.30.2"
