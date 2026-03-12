@@ -11,7 +11,7 @@ requires = ["hatchling"]
 
 [tool.pixi.workspace]
 channels = ["https://prefix.dev/ai-demos", "conda-forge"]
-platforms = ["osx-arm64"]
+platforms = ["osx-arm64", "linux-aarch64"]
 
 [tool.pixi.dependencies]
 av = "*"
