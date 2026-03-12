@@ -2815,7 +2815,7 @@ packages:
 - pypi: ./
   name: rr-gs-test
   version: 0.1.0
-  sha256: 5a925b4ac7eb1637a4888dda92bb02ff03a15068626da6d1e8deb35cd8db8aec
+  sha256: 4f84de28799f8b19ec83975caa7a031c33d4cb874c64ca7a69468f3ff8cf237c
   requires_python: '>=3.11'
 - conda: https://conda.anaconda.org/conda-forge/osx-arm64/ruff-0.15.5-h279115b_0.conda
   noarch: python

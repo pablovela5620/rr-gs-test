@@ -32,10 +32,37 @@ plyfile = ">=1.1,<2"
 rerun-sdk = "==0.30.2"
 simplecv = { git = "https://github.com/pablovela5620/simplecv", rev = "v0.7.2" }
 
+[tool.pixi.tasks._download_chair_data]
+cmd = "test -f data/chair/chair.zip || hf download pablovela5620/splat-dataset chair.zip --repo-type dataset --local-dir data/chair/"
+outputs = ["data/chair/chair.zip"]
 
-[tool.pixi.tasks]
-viewer = "rerun-gs-viewer"
-log-chair = "python -m rr_gs_test.log_chair"
+[tool.pixi.tasks._unzip_chair_data]
+cmd = "test -f data/chair/transforms_train.json || unzip -o data/chair/chair.zip -d data/"
+depends-on = ["_download_chair_data"]
+inputs = ["data/chair/chair.zip"]
+outputs = [
+    "data/chair/transforms_train.json",
+    "data/chair/transforms_val.json",
+    "data/chair/train/*.png",
+    "data/chair/val/*.png",
+]
+
+[tool.pixi.tasks._download_chair_ply]
+cmd = "test -f data/chair/chair.ply || hf download pablovela5620/splat-dataset chair.ply --repo-type dataset --local-dir data/chair/"
+depends-on = ["_unzip_chair_data"]
+outputs = ["data/chair/chair.ply"]
+
+[tool.pixi.tasks._download_room_ply]
+cmd = "test -f data/room/splat-bedroom.ply || hf download pablovela5620/supersplat-example splat-bedroom.ply --repo-type dataset --local-dir data/room/"
+outputs = ["data/room/splat-bedroom.ply"]
+
+[tool.pixi.tasks.log-chair]
+cmd = "python tools/view_splat_with_cams.py --rr-config.executable-name rerun-gs-viewer"
+depends-on = ["_download_chair_ply"]
+
+[tool.pixi.tasks.log-room]
+cmd = "python tools/view_any_splat.py --rr-config.executable-name rerun-gs-viewer --ply-path data/room/splat-bedroom.ply"
+depends-on = ["_download_room_ply"]
 
 
 [tool.pixi.feature.dev.dependencies]
