@@ -1,5 +1,5 @@
 [project]
-authors = [{name = "Pablo Vela", email = "pablovela5620@gmail.com"}]
+authors = [{ name = "Pablo Vela", email = "pablovela5620@gmail.com" }]
 dependencies = []
 name = "rr-gs-test"
 requires-python = ">= 3.11"
@@ -13,16 +13,37 @@ requires = ["hatchling"]
 channels = ["https://prefix.dev/ai-demos", "conda-forge"]
 platforms = ["osx-arm64"]
 
+[tool.pixi.dependencies]
+av = "*"
+python = "==3.12"
+numpy = ">=2.0,<3"
+jaxtyping = ">=0.2.36,<0.3.0"
+pyserde = ">=0.20.0,<0.30"
+typing_extensions = ">=4.1.0,<4.13.0"
+rerun-gs-viewer = "==0.30.2"
+beartype = ">=0.22.9,<0.23"
+tyro = ">=0.9.1,<0.10"
+huggingface_hub = ">=1.6.0,<2"
+
+
 [tool.pixi.pypi-dependencies]
 rr_gs_test = { path = ".", editable = true }
 plyfile = ">=1.1,<2"
 rerun-sdk = "==0.30.2"
+simplecv = { git = "https://github.com/pablovela5620/simplecv", rev = "v0.7.2" }
+
 
 [tool.pixi.tasks]
 viewer = "rerun-gs-viewer"
 log-chair = "python -m rr_gs_test.log_chair"
 
-[tool.pixi.dependencies]
-python = "==3.12"
-numpy = ">=2.0,<3"
-rerun-gs-viewer = "==0.30.2"
+
+[tool.pixi.feature.dev.dependencies]
+pytest = ">=8.0.0,<9"
+hypothesis = ">=6.0.0,<7"
+beartype = ">=0.20"
+pyrefly = ">=0.34.0,<0.35"
+ruff = "*"
+
+[tool.pixi.environments]
+dev = { features = ["dev"], solve-group = "default" }
